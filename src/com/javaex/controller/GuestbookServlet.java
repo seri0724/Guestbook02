@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import com.javaex.dao.GuestbookDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestbookVo;
 
 @WebServlet("/gb") //GuestbookServlet -> gb로 이름 바꿔줌
@@ -31,8 +32,9 @@ public class GuestbookServlet extends HttpServlet {
 			List<GuestbookVo> list = dao.getList();
 			
 			request.setAttribute("list", list); //부를이름, 실제데이터
-			RequestDispatcher rd = request.getRequestDispatcher("list.jsp");
-			rd.forward(request, response);			
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/list.jsp");
+			rd.forward(request, response);*/
+			WebUtil.forword(request, response, "/WEB-INF/list.jsp");
 		} else if("add".equals(actionName)) {
 			System.out.println("add 진입");
 			
@@ -44,15 +46,17 @@ public class GuestbookServlet extends HttpServlet {
 			GuestbookDao dao = new GuestbookDao();
 			dao.insert(vo);
 			
-			response.sendRedirect("gb?a=list");
+			/*response.sendRedirect("/guestbook2/gb?a=list");*/
+			WebUtil.redirect(request, response, "/guestbook2/gb?a=list");
 		} else if("deleteform".equals(actionName)) {
 			System.out.println("deleteform 진입");
 			
 			String no = request.getParameter("no");
 			request.setAttribute("no", no);
 	
-			RequestDispatcher rd = request.getRequestDispatcher("deleteform.jsp");
-			rd.forward(request, response);
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/deleteform.jsp");
+			rd.forward(request, response);*/
+			WebUtil.forword(request, response, "/WEB-INF/deleteform.jsp");
 		} else if("delete".equals(actionName)) {
 			System.out.println("delete 진입");
 			
@@ -71,7 +75,8 @@ public class GuestbookServlet extends HttpServlet {
 					}
 				}
 			}
-			response.sendRedirect("gb?a=list");
+			/*response.sendRedirect("/guestbook2/gb?a=list");*/
+			WebUtil.redirect(request, response, "/guestbook2/gb?a=list");
 		} else {
 			System.out.println("잘못입력했습니다.");
 		}

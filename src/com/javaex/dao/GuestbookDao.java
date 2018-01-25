@@ -166,6 +166,8 @@ public class GuestbookDao {
 			return list;
 	}
 	public GuestbookVo select(int no) {
+		
+		// 0. import java.sql.*;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
